@@ -29,7 +29,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Les attributs qui doivent être convertis en types natifs.
      *
      * @var array
      */
@@ -37,7 +37,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    //
+    /**
+     * Mise de la relation en place
+     *
+     * Un utilisateur peut avoir plusieurs roles
+     * Un role pour peur etre attribué à plusieur users
+     *
+     * Donc on utilise la clossure "belongsToMany"
+     */
     public function roles()
     {
         return $this->belongsToMany('App\Role');
