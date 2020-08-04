@@ -8,7 +8,7 @@
                 <div class="span12">
                     <div class="widget widget-table action-table">
                         <div class="widget-header"> <i class="icon-th-list"></i>
-                            <h3>Liste des utilisateurs</h3>
+                            <h3>Liste des roles</h3>
                         </div>
                         <!-- /widget-header -->
                         <div class="widget-content">
@@ -16,25 +16,14 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Nom</th>
-                                        <th scope="col">Adresse email</th>
                                         <th scope="col">Roles</th>
-                                        <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
+                                    @foreach ($roles as $role)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
-                                        <td>{{ $user->name }}</td>
-                                        <td>
-                                            <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
-                                        </td>
-                                        <td class="text-nowrap">{{ implode(', ', $user->roles()->get()->pluck('name')->toArray()) }}</td>
-                                        <td class="text-nowrap">
-                                            <a href="{{ Route('admin.users.edit', $user->id) }}" class="btn btn-success btn-sm" role="button" aria-pressed="true">Modifer</a>
-                                            <a href="{{ Route('admin.users.destroy', $user->id) }}" class="btn btn-warning btn-sm" role="button" aria-pressed="true">Supprimer</a>
-                                        </td>
+                                        <td>{{ $role->name }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

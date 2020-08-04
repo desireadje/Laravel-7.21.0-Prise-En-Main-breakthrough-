@@ -10,7 +10,7 @@ class Role extends Model
      * Mise de la relation en place
      *
      * Un utilisateur peut avoir plusieurs roles
-     * Un role pour peur etre attribué à plusieur users
+     * Un role peut etre attribué à plusieur users
      *
      * Donc on utilise la clossure "belongsToMany"
      */

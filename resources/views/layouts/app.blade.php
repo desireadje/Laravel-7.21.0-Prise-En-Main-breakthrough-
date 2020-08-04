@@ -1,38 +1,42 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="{{ asset('static/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
+            rel="stylesheet">
+    <link href="{{ asset('static/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('static/css/pages/dashboard.css') }}" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top shadow-sm">
+    <div class="navbar navbar-fixed-top" style="margin-bottom: 2.5em;">
+        <div class="navbar-inner">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="index.html">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
+
+                <div class="nav-collapse">
+                    <ul class="nav pull-right">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item active">
@@ -44,11 +48,17 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item {{ isset($user_nav) ? $user_nav : '' }}">
-                                <a class="nav-link" href="{{ Route('admin.users.index') }}">Utilisateurs <span class="sr-only">(current)</span></a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.categories.index') }}">Postes</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Roles</a>
+                                <a class="nav-link" href="{{ route('admin.categories.index') }}">Catégories</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.users.index') }}">Utilisateurs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.roles.index') }}">Roles</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Pricing</a>
@@ -57,41 +67,54 @@
                                 <a class="nav-link disabled" href="#">Disabled</a>
                             </li>
 
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="icon-user"></i> {{ Auth::user()->name }} <b class="caret"></b>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
+                                        {{ __('Logout') }}</a></li>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                </ul>
                             </li>
                         @endguest
                     </ul>
-                </div>
+                </div><!--/.nav-collapse -->
             </div>
-        </nav>
-
-        <main class="py-4">
-            @if (session()->has('message'))
-                <div class="alert alert-primary" role="alert">
-                    {{ session()->has('message') }}
-                </div>
-            @endif
-            @yield('content')
-        </main>
+            <!-- /container -->
+        </div>
+        <!-- /navbar-inner -->
     </div>
+    <!-- /navbar -->
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    @yield('content')
+
+    <div class="footer">
+        <div class="footer-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="span12"> &copy; 2013 <a href="#">Bootstrap Responsive Admin Template</a>. </div>
+                    <!-- /span12 -->
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /footer-inner -->
+    </div>
+    <!-- /footer -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ asset('static/js/jquery-1.7.2.min.js') }}"></script>
+    <script src="{{ asset('static/js/excanvas.min.js') }}"></script>
+    <script src="{{ asset('static/js/chart.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('static/js/bootstrap.js') }}"></script>
+
 </body>
 </html>

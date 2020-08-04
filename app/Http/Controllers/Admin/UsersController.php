@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class UsersController extends Controller
 {
@@ -32,10 +33,8 @@ class UsersController extends Controller
     {
         // dd(Auth::user());
         $users = User::all();
-        $user_nav = 'active';
 
-        return view('admin.users.index')->with('users', $users)
-                                        ->with('user_nav', $user_nav);
+        return view('admin.users.index')->with('users', $users);
     }
 
     /**
@@ -78,6 +77,12 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        // denies : Non autorisé, il arrete tous
+        if (Gate::denies('edit-users')) {
+            // L'utilisateur connecté ne peut pas faire de modification
+            return redirect()->route('admin.users.index');
+        }
+
         // Récupération de la liste des roles
         $roles = Role::all();
         // dd($user->roles); // Role de l'utilisateur
@@ -100,17 +105,32 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        dd($request->roles);
+        // Je fais la synchronisation
+        $user->roles()->sync($request->roles);
+
+        // Je fais la redirection vers la liste des uers
+        return redirect()->route('admin.users.index');
     }
 
     /**
      * Supprimez la ressource spécifiée du stockage.
+     *
+     * Avant toute suppresion de users, je vais tous
+     * d'abord retirer les relation qui existe entre
+     * le user et ses roles puis on supprime.
      *
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
-        //
+        // denies : Non autorisé, il arrete tous
+        if (Gate::denies('delete-users')) {
+            // L'utilisateur connecté ne peut pas faire de modification
+            return redirect()->route('admin.users.index');
+        }
+
+        exit('okkokk');
+        dd($user);
     }
 }

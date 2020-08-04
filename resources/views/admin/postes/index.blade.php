@@ -23,17 +23,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
+                                    @foreach ($postes as $poste)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
-                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $poste->titre }}</td>
                                         <td>
-                                            <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
+                                            <em>{{ $poste->contenu }}</em>
                                         </td>
-                                        <td class="text-nowrap">{{ implode(', ', $user->roles()->get()->pluck('name')->toArray()) }}</td>
+                                        <td class="text-nowrap">{{ implode(', ', $poste->roles()->get()->pluck('name')->toArray()) }}</td>
                                         <td class="text-nowrap">
-                                            <a href="{{ Route('admin.users.edit', $user->id) }}" class="btn btn-success btn-sm" role="button" aria-pressed="true">Modifer</a>
-                                            <a href="{{ Route('admin.users.destroy', $user->id) }}" class="btn btn-warning btn-sm" role="button" aria-pressed="true">Supprimer</a>
+                                            <a href="{{ Route('admin.users.edit', $poste->id) }}" class="btn btn-success btn-sm" role="button" aria-pressed="true">Modifer</a>
+                                            <a href="{{ Route('admin.users.destroy', $poste->id) }}" class="btn btn-warning btn-sm" role="button" aria-pressed="true">Supprimer</a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\App;
 
 class User extends Authenticatable
 {
@@ -41,12 +42,27 @@ class User extends Authenticatable
      * Mise de la relation en place
      *
      * Un utilisateur peut avoir plusieurs roles
-     * Un role pour peur etre attribué à plusieur users
+     * Un role peut etre attribué à plusieur users
      *
      * Donc on utilise la clossure "belongsToMany"
      */
     public function roles()
     {
         return $this->belongsToMany('App\Role');
+    }
+
+    /**
+     * Cette fonction permet de verifier si l'utilisateur
+     * connecté a le role Admin.
+     *
+     * Le resultat de la fonction est retourné dans le Gate edit-users
+     * dans la class AuthServiceProvider
+     *
+     * @return  true or false
+     *
+     */
+    public function isAdmin()
+    {
+        return  $this->roles()->where('name', 'admin')->first();
     }
 }

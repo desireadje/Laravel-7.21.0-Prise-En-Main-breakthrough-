@@ -1,77 +1,72 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+@section('auth_content')
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+<div class="account-container register">
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+	<div class="content clearfix">
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Nom">
+		<form method="POST" action="{{ route('register') }}">
+            @csrf
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+			<h2>{{ __('Register') }} Free Account</h2>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+			<div class="login-fields">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Adresse email">
+                <p>Create your free account</p>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+				<div class="field">
+					<label for="name">{{ __('Name') }}</label>
+                    <input id="name" type="text" name="name" class="login @error('name') is-invalid @enderror" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Nom" />
+                    @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+				</div> <!-- /field -->
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+				<div class="field">
+					<label for="email">{{ __('E-Mail Address') }}</label>
+					<input id="email" type="email" class="login @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Adresse email" />
+				</div> <!-- /field -->
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Mot de passe confidentiel">
+				<div class="field">
+					<label for="password">{{ __('Password') }}</label>
+					<input id="password" type="password" class="login  @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Mot de passe confidentiel" />
+                </div> <!-- /field -->
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+				<div class="field">
+					<label for="password-confirm">{{ __('Confirm Password') }}</label>
+					<input id="password-confirm" type="password" class="login" name="password_confirmation" required autocomplete="new-password" placeholder="Confirmer mot de passe confidentiel" />
+				</div> <!-- /field -->
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+			</div> <!-- /login-fields -->
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirmer mot de passe confidentiel">
-                            </div>
-                        </div>
+			<div class="login-actions">
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+				<span class="login-checkbox">
+					<input id="Field" name="Field" type="checkbox" class="field login-checkbox" value="First Choice" tabindex="4" />
+					<label class="choice" for="Field">Agree with the Terms & Conditions.</label>
+                </span>
+
+				<button type="submit" class="button btn btn-primary btn-large">
+                    {{ __('Register') }}
+                </button>
+
+			</div> <!-- .actions -->
+
+		</form>
+
+	</div> <!-- /content -->
+
+</div> <!-- /account-container -->
+
+@if (Route::has('login'))
+    <div class="login-extra">
+        Already have an account?
+        <a href="{{ route('login') }}">
+            {{ __('Login to your account') }}
+        </a>
+    </div> <!-- /login-extra -->
+@endif
 @endsection
